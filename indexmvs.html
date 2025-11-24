@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miami Vex Support | Engineering Education for All</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #001f3f;
+            --gold: #FFD700;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --dark-gray: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--navy);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .logo-accent {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold);
+        }
+
+        .nav-links a.active {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Content */
+        .page {
+            display: none;
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--navy) 0%, #003366 100%);
+            color: var(--white);
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: var(--gold);
+            opacity: 0.1;
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero-highlight {
+            color: var(--gold);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--navy);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+            margin-bottom: 3rem;
+            opacity: 0.8;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--gold);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+
+        /* Programs Grid */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .program-card {
+            background: var(--light-gray);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s;
+            border-left: 5px solid var(--gold);
+        }
+
+        .program-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .program-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .program-card h3 {
+            color: var(--navy);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+
+        .team-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 4px solid var(--gold);
+        }
+
+        .team-member h3 {
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .team-role {
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Sponsors Grid */
+        .sponsors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .sponsor-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+            transition: transform 0.3s;
+            border: 2px solid var(--light-gray);
+        }
+
+        .sponsor-card:hover {
+            transform: scale(1.05);
+            border-color: var(--gold);
+        }
+
+        .sponsor-placeholder {
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+            text-align: center;
+        }
+
+        /* Resources */
+        .resource-card {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--navy);
+            transition: all 0.3s;
+        }
+
+        .resource-card:hover {
+            border-left-color: var(--gold);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .resource-card h3 {
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-card p {
+            margin-bottom: 1rem;
+        }
+
+        .resource-link {
+            color: var(--navy);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-link:hover {
+            color: var(--gold);
+        }
+
+        /* Contact Form */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-form {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .contact-info h3 {
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .contact-item {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy);
+            color: var(--white);
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--white);
+            opacity: 0.8;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--navy);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="showPage('home')">
+                <span>Miami</span>
+                <span class="logo-accent">Vex Support</span>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('programs')">Programs</a></li>
+                <li><a href="#" onclick="showPage('team')">Team</a></li>
+                <li><a href="#" onclick="showPage('sponsors')">Sponsors</a></li>
+                <li><a href="#" onclick="showPage('resources')">Resources</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Engineering Education for <span class="hero-highlight">Every Student</span></h1>
+                <p>Bridging the resource gap that prevents talented students from accessing STEM education and robotics competition opportunities in Miami.</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="showPage('contact')">Get Involved</button>
+                    <button class="btn btn-secondary" onclick="showPage('programs')">Our Programs</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="background: var(--light-gray);">
+            <div class="container">
+                <h2 class="section-title">Our Impact</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">School Partnerships</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2+</div>
+                        <div class="stat-label">Annual Summer Camps</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Students Served</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Volunteer Mentors</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="about" class="page">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">About Miami Vex Support</h2>
+                <p class="section-subtitle">Our Mission & Vision</p>
+                
+                <div style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; line-height: 1.8;">
+                    <h3 style="color: var(--navy); margin-top: 2rem; margin-bottom: 1rem;">Mission</h3>
+                    <p>Miami Vex Support was founded to provide engineering education and robotics opportunities to underrepresented communities in Miami. We bridge the resource gap that prevents talented students from accessing STEM education and competition opportunities.</p>
+                    
+                    <h3 style="color: var(--navy); margin-top: 2rem; margin-bottom: 1rem;">Our Approach</h3>
+                    <p>Through partnerships with schools, volunteer mentors, and industry professionals, we've built a sustainable ecosystem focused on:</p>
+                    <ul style="margin: 1rem 0 1rem 2rem;">
+                        <li>Establishing robotics programs at schools with equipment and curriculum</li>
+                        <li>Organizing summer programs introducing engineering fundamentals</li>
+                        <li>Building a network of volunteer mentors from colleges and industry</li>
+                        <li>Supporting teams in preparing for VEX Robotics competitions</li>
+                    </ul>
+                    
+                    <h3 style="color: var(--navy); margin-top: 2rem; margin-bottom: 1rem;">Vision for the Future</h3>
+                    <p>We're expanding to more schools, increasing summer program capacity, and creating pathways for students to continue STEM education through college. Our goal is sustainable impact that changes trajectories, not just provides experiences.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PROGRAMS PAGE -->
+    <div id="programs" class="page">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Our Programs</h2>
+                <p class="section-subtitle">Comprehensive support for every stage of the journey</p>
+                <div class="programs-grid">
+                    <div class="program-card">
+                        <div class="program-icon">🏫</div>
+                        <h3>School Partnerships</h3>
+                        <p>We establish robotics programs at Miami schools, providing equipment, curriculum, and ongoing mentorship to ensure sustainable success.</p>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-icon">☀️</div>
+                        <h3>Summer Programs</h3>
+                        <p>Annual summer robotics camps introduce students to engineering fundamentals through hands-on projects and team challenges.</p>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-icon">🤝</div>
+                        <h3>Volunteer Network</h3>
+                        <p>A community of college students and industry professionals providing mentorship, guidance, and real-world insights.</p>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-icon">🏆</div>
+                        <h3>Competition Support</h3>
+                        <p>Comprehensive preparation and support for teams attending VEX Robotics competitions, often their first competitive experience.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- TEAM PAGE -->
+    <div id="team" class="page">
+        <section class="section" style="background: var(--light-gray);">
+            <div class="container">
+                <h2 class="section-title">Our Team</h2>
+                <p class="section-subtitle">Meet the people making it happen</p>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="team-photo">👤</div>
+                        <h3>Founder Name</h3>
+                        <div class="team-role">Executive Director</div>
+                        <p>Bio and background information goes here.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-photo">👤</div>
+                        <h3>Team Member</h3>
+                        <div class="team-role">Program Director</div>
+                        <p>Bio and background information goes here.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-photo">👤</div>
+                        <h3>Team Member</h3>
+                        <div class="team-role">Volunteer Coordinator</div>
+                        <p>Bio and background information goes here.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-photo">👤</div>
+                        <h3>Team Member</h3>
+                        <div class="team-role">Technical Lead</div>
+                        <p>Bio and background information goes here.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- SPONSORS PAGE -->
+    <div id="sponsors" class="page">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Our Sponsors</h2>
+                <p class="section-subtitle">Thank you to our generous supporters</p>
+                <div class="sponsors-grid">
+                    <div class="sponsor-card">
+                        <div class="sponsor-placeholder">Sponsor Logo</div>
+                    </div>
+                    <div class="sponsor-card">
+                        <div class="sponsor-placeholder">Sponsor Logo</div>
+                    </div>
+                    <div class="sponsor-card">
+                        <div class="sponsor-placeholder">Sponsor Logo</div>
+                    </div>
+                    <div class="sponsor-card">
+                        <div class="sponsor-placeholder">Sponsor Logo</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 4rem; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <h3 style="color: var(--navy); margin-bottom: 1rem;">Become a Sponsor</h3>
+                    <p style="margin-bottom: 2rem;">Your support helps us expand our programs and reach more students. Contact us to learn about sponsorship opportunities.</p>
+                    <button class="btn btn-primary" onclick="showPage('contact')">Contact Us</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- RESOURCES PAGE -->
+    <div id="resources" class="page">
+        <section class="section" style="background: var(--light-gray);">
+            <div class="container">
+                <h2 class="section-title">Resources</h2>
+                <p class="section-subtitle">Materials for students, mentors, and teams</p>
+                
+                <div class="resource-card">
+                    <h3>📚 Curriculum Materials</h3>
+                    <p>Comprehensive curriculum guides, lesson plans, and teaching resources for robotics education.</p>
+                    <a href="#" class="resource-link">Access Materials →</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3>📋 Competition Schedules</h3>
+                    <p>Upcoming VEX Robotics competitions, registration deadlines, and event information.</p>
+                    <a href="#" class="resource-link">View Schedule →</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3>🔧 Project Documentation</h3>
+                    <p>Build guides, technical documentation, and project examples from past teams.</p>
+                    <a href="#" class="resource-link">Browse Projects →</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3>📖 Important Documents</h3>
+                    <p>Forms, policies, volunteer guides, and other essential documents.</p>
+                    <a href="#" class="resource-link">View Documents →</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3>🎓 Mentor Guide</h3>
+                    <p>Resources and best practices for volunteers and mentors working with our teams.</p>
+                    <a href="#" class="resource-link">Read Guide →</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Questions? Want to get involved? Reach out!</p>
+                
+                <div class="contact-grid">
+                    <div class="contact-form">
+                        <h3 style="color: var(--navy); margin-bottom: 1.5rem;">Send us a message</h3>
+                        <form>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" placeholder="Your name">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" placeholder="your.email@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <input type="text" placeholder="How can we help?">
+                            </div>
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea placeholder="Tell us more..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                        </form>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <h3>Contact Information</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div>
+                                <strong>Email</strong><br>
+                                info@miamivexsupport.org
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📱</div>
+                            <div>
+                                <strong>Phone</strong><br>
+                                (305) XXX-XXXX
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div>
+                                <strong>Location</strong><br>
+                                Miami, Florida
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🌐</div>
+                            <div>
+                                <strong>Social Media</strong><br>
+                                Follow us on [Platform Links]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Miami Vex Support</h3>
+                <p>Engineering education for underrepresented communities in Miami.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#" onclick="showPage('about')">About Us</a>
+                <a href="#" onclick="showPage('programs')">Programs</a>
+                <a href="#" onclick="showPage('team')">Our Team</a>
+                <a href="#" onclick="showPage('contact')">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Get Involved</h3>
+                <a href="#" onclick="showPage('contact')">Volunteer</a>
+                <a href="#" onclick="showPage('sponsors')">Become a Sponsor</a>
+                <a href="#" onclick="showPage('resources')">Resources</a>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <a href="mailto:info@miamivexsupport.org">Email Us</a>
+                <a href="#">Social Media</a>
+                <a href="#">Newsletter</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Miami Vex Support. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update active nav link
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Close mobile menu if open
+            document.getElementById('navLinks').classList.remove('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
